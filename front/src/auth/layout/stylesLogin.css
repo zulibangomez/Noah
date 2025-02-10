@@ -1,0 +1,141 @@
+.background-logo {
+    width: 200px !important; /* Fuerza el tamaño */
+    height: auto !important;
+    margin-bottom: 5px !important; /* bajar el texto */
+    padding: 5px !important;
+  }
+  /* alinear la iamgen del logo dentro de la caja blanca */
+  .text-center {
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: center; /* Centra verticalmente */
+    flex-direction: column; /* Coloca el texto debajo de la imagen */
+  }
+  
+  .auth-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  .background-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+  }
+  
+  .container-fluid {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .card {
+    background-color: rgba(255, 255, 255, 0.9);
+    z-index: 2;
+  }
+  
+
+  /* diseño de iconos */
+  
+.social-media {
+    margin-top: 80px; /* Espaciado superior */
+}
+
+.social-media h3 {
+    margin-bottom: 10px;
+    font-size: 20px; /* Tamaño de fuente para el encabezado */
+    color: #333; /* Color del texto */
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center; /* Centrar iconos */
+    flex-wrap: wrap; /* Permitir que los iconos se ajusten en filas */
+}
+
+.social-icon {
+    font-size: 30px; /* Tamaño del icono */
+    margin: 0 15px; /* Espaciado entre iconos */
+    color: #e31111; /* Color de los iconos */
+    transition: color 0.3s ease; /* Efecto de transición al pasar el ratón */
+}
+
+.social-icon:hover {
+    color: #2a72be; /* Color de los iconos al pasar el ratón */
+}
+/* colores de diseño del boton para que cambie de color  */
+.button-container {
+    width: 100%;
+    display: flex; /* Opción adicional para asegurar que el botón se alinee correctamente */
+  }
+  
+button {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: #0e4c9f;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: 0px 6px 24px 0px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+  /*  width: 100%; /* Ocupa todo el ancho */
+  /* height: 50px; /* Ajusta esta altura según sea necesario */
+}
+  
+ /* button:after {
+    content: " ";
+    width: 0%;
+    height: 100%;
+    background: #cd0234;
+    position: absolute;
+    transition: all 0.4s ease-in-out;
+    right: 0;
+  }*/
+  
+  button:hover::after {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
+  
+  button span {
+    text-align: center;
+    text-decoration: none;
+    width: 100%;
+    padding: 18px 25px;
+    /*color: #fff;*/
+    font-size: 1.125em;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    z-index: 20;
+   /*transition: all 0.3s ease-in-out;*/
+  }
+  
+ /* button:hover span {
+    animation: scaleUp 0.3s ease-in-out;
+  }*/
+  .logo-container {
+    background:#C1C0BB;
+    display: flex;
+    justify-content: center; /* Centra horizontalmente */
+    align-items: flex-start; /* Centra verticalmente */
+    height: 100vh; /* Asegura que el contenedor ocupe toda la altura de la ventana */
+  }
+  
+  .logo-image {
+    max-width: 700px; /* Ajusta el tamaño de la imagen a un ancho máximo */
+    max-height: 600px; /* Ajusta el tamaño de la imagen a una altura máxima */
+    object-fit: contain; /* Mantiene la proporción original de la imagen */
+    opacity: 0.8; /* Ajusta la transparencia (0 es completamente transparente, 1 es opaco) */
+    /* filter: blur(1px); */
+  }
