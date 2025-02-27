@@ -11,7 +11,7 @@ async function Aspectos(params) {
         
       const result= await pool.query(`
     INSERT INTO eva.aspectos (nombre, descripcion, estado)
-    VALUES ($1::text, $2::text, $3::boolean);`, [nombre, descripcion, estado]
+    VALUES ($1::text, $2::text, true);`, [nombre, descripcion]
 
       )
       console.log('respuesta',result.rows);
@@ -27,7 +27,19 @@ async function lisAapectos(params) {
     const nombre=params.nombre;
     const descripcion=params.descripcion;
     
-    const query ='select * from eva.aspectos order by id  desc';
+    const query =`
+    select 
+    id, 
+    nombre, 
+    descripcion, 
+    concat(nombre,'-',descripcion ) as aspecto,
+    CASE 
+    WHEN estado=true THEN 'Activo'
+    ELSE 'Desactivado' END as estado	
+    from eva.aspectos
+    --where estado=true
+    order by id  desc`;
+    
     const result= await pool.query(query )
       console.log('respuesta',result.rows);
       return result.rows;
@@ -63,8 +75,8 @@ async function actualizarAspectos(params) {
    
       
 
-     const query='UPDATE eva.aspectos set nombre =$2, descripcion=$3, estado=$4 where id=$1 RETURNING *';
-     const result=await pool.query(query,[id, nombre, descripcion, true])
+     const query='UPDATE eva.aspectos set nombre =$2, descripcion=$3, estado=true where id=$1 RETURNING *';
+     const result=await pool.query(query,[id, nombre, descripcion])
 
      if (result.rows.length === 0) {
       console.log('No se encontró el aspecto con ese ID');

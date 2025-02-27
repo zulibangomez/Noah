@@ -1,14 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-
 import Modal from'react-modal';
-import {Typography, TextField, Button, Box} from '@mui/material';
+import {Typography, TextField, Button, Box, IconButton} from '@mui/material';
 import Swal from 'sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { useUiStoreAsp } from '../../../../../hooks';
 import { useAspectoStore } from '../aspectos/index';
-import { SaveOutlined } from '@mui/icons-material';
-
-
+import { Close, SaveOutlined } from '@mui/icons-material';
 
 const customStyles = {
     content: {
@@ -20,21 +17,20 @@ const customStyles = {
       transform: 'translate(-50%, -50%)',
     },
   };
- 
-;
-
+  
   Modal.setAppElement('#root');
 
 export const FormAspectoModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStoreAsp();
    ///estado adicional para validar campo, por defecto no se ha realizado el submit del formulario
    const [formSubmitted, setformSubmitted] = useState(false);
-   const{setActivarEvent, activeEvent, startAspecto}=useAspectoStore();
+   const{setActivarEvent, activeEvent, startAspecto, listaAspectos}=useAspectoStore();
    const [formValues, setformValues] = useState({
     nombre: '',
     descripcion: '',
 
   })
+ 
   useEffect(() => {
    // console.log("activeEvent:", activeEvent); // Verifica si el evento activo tiene los datos correctos
     if (activeEvent) {
@@ -52,10 +48,9 @@ export const FormAspectoModal = () => {
   }, [activeEvent]);
 
 ////////
-
-
    ///para cerrar modal 
    const onCloseModal=()=>{
+    document.activeElement.blur();  // Evita que un botón dentro del modal mantenga el foco
     closeDateModal();
     console.log('cerrar modal');
     setformSubmitted({
@@ -73,9 +68,6 @@ export const FormAspectoModal = () => {
         [target.name]:target.value,
       }); //se actualiza le valor 
    };
-
-
-
   /////el posteo del formulario que se envien los datos 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -92,6 +84,7 @@ export const FormAspectoModal = () => {
         title: 'Guardado',
         text: 'El aspecto se guardó con éxito',
       });
+      await listaAspectos();
       setformValues({
         nombre: '',
         descripcion: '',
@@ -113,13 +106,20 @@ export const FormAspectoModal = () => {
     isOpen={isDateModalOpen} // Estado de apertura del modal
     onRequestClose={onCloseModal}// Cierra el modal al hacer clic fuera
         style={customStyles}
-       // className="modal"
-        overlayClassName="modal-fondo"
-    
+        ariaHideApp={false} 
     >
+    <div style={{ position: 'relative' }}>
+    {/* Icono para cerrar el modal */}
+    <IconButton
+      onClick={onCloseModal}
+      style={{ position: 'absolute', top: 6, right: 6 }}
+    >
+      <Close />
+    </IconButton>
+    </div>
         <Typography id="modal-modal-title" variant="h6" component="h2">
                       Aspecto
-                </Typography>
+         </Typography>
                 <form onSubmit={onSubmit}>
                     <TextField
                         data-focus="first"
@@ -135,8 +135,7 @@ export const FormAspectoModal = () => {
                           formSubmitted && formValues.nombre.trim().length === 0
                             ? 'El nombre es obligatorio'
                             : ''
-                        }
-                       
+                        }   
                     />
                     <TextField
                         label="Descripción"
@@ -147,14 +146,12 @@ export const FormAspectoModal = () => {
                         value={formValues.descripcion || ''}
                         onChange={onInputChange}
                     />
-                
                     <Button  variant="contained" color="primary" type="submit" fullWidth  >
                        <SaveOutlined sx={{fontSize:30, mr:1}}/>
-                    </Button>
-
-
-                    
+                    </Button>   
+  
                 </form>
+     
 
     </Modal>
   )

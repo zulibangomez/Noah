@@ -1,29 +1,40 @@
-import { Grid, Grid2, Typography } from "@mui/material"
+import { Box, Grid2, Typography } from "@mui/material"
 import { BotonActualizar, BotonAddNew, BotonDelete } from "../modelComponents";
 import { FormAspectoModal, useAspectoStore } from "../aspectos";
 import { useEffect, useMemo, useState } from "react";
 import DataTable from 'react-data-table-component';
 import './../../../../../styles.css'
 import { BotonEliminarAS } from "../modelComponents/BotonEliminarAS";
-//import {FormAspectoModal} from "./";
+import { MenusGeneralSist } from "../../../../../shared/MenusGeneralSist";
+import CheckIcon from '@mui/icons-material/Check';
+import BackHandIcon from '@mui/icons-material/BackHand';
 
+//import {FormAspectoModal} from "./";
 
 export const AspectosView = () => {
   const { listaAspectos, events, deleteEventoAspecto } = useAspectoStore();//se llaman del useAspectoStore
   const [selectedRows, setSelectedRows] = useState([]); // Estado para filas seleccionadas 
 
 /////para listar 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await listaAspectos(); //listaAspectos función que retorna una promesa.
-      } catch (error) {
-        console.error("Error fetching data:", error);
+
+
+
+useEffect(() => {
+  let isMounted = true;
+  const fetchData = async () => {
+    try {
+      const data = await listaAspectos();
+      if (isMounted) {
+        console.log('Lista de aspectos:', data);
       }
-    };
-  
-    fetchData();
-  }, []);//solo se ejecuta una vez
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  fetchData();
+  return () => { isMounted = false; }; // Evita actualizar si el componente se desmonta
+}, [listaAspectos]);
 
   useEffect(() => {
     setSelectedRows([]);
@@ -34,8 +45,6 @@ export const AspectosView = () => {
     console.log('Checkbox seleccionado:', value);
 
     setSelectedRows((prev) => {
-      
-      
       if (checked) {
         // Agrega el ID si está seleccionado
         return [...prev, row.id];
@@ -45,8 +54,15 @@ export const AspectosView = () => {
       }
     });
   };
-
-
+  const handleDelete = async () => {
+    if (selectedRows.length === 0) return;
+    try {
+      await deleteEventoAspecto(selectedRows); // Asegurar que es async
+      await listaAspectos(); // Refrescar la tabla
+    } catch (error) {
+      console.error("Error al eliminar aspectos:", error);
+    }
+  };
 
    const columns = [
             {
@@ -66,7 +82,7 @@ export const AspectosView = () => {
             ...(
               events && events.length > 0
                 ? Object.keys(events[0])
-                    .filter((key) => key !== "id" && key !== "estado") // Filtra las columnas no deseadas
+                    .filter((key) => key !== "id" && key ) // Filtra las columnas no deseadas
                     .map((key) => ({
                       name: key.charAt(0).toUpperCase() + key.slice(1), // Capitaliza el nombre
                       selector: (row) => row[key], // Accede dinámicamente al valor
@@ -81,6 +97,7 @@ export const AspectosView = () => {
               ignoreRowClick: true,
               
               style: { minWidth: '30px', maxWidth: '150px' },
+              
             },
     
           ];
@@ -88,72 +105,56 @@ export const AspectosView = () => {
           //   return [...new Map(events.map(item => [item.id, item])).values()];
           // }, [events]);
 
-        
-
-  return (
-
-  
-    <Grid  container
+  return ( 
+    <Box 
     direction="column"
     sx={{
-     // height: "100vh", // Altura completa de la pantalla
-     // width: "100%", // Ancho completo
-     // overflow: "hidden", // Evita desbordamientos
       padding: 2, // Espaciado interno
     }}>
-     <Grid
-            container
-            direction="row"
-            justifyContent="flex-end" // Ubica los elementos en los extremos
-            alignItems="center" // Centra verticalmente
-            spacing={1}
-            sx={{ marginBottom: 2 }}
-          >
+        <><MenusGeneralSist /></>
+         <Box
+         sx={{ width: "100%", textAlign: "center", minHeight: "60px" }} // Asegura el ancho y la alineación
+         >
+         <Typography variant="h4" component="h5">
+            Aspectos 
+          </Typography>
+         </Box>
+      
+           <Box
+            display="flex"
+            flexDirection="row"
+            justifyContent="flex-end"
+            alignItems="center"
+            gap={0.1} // Ajusta el espacio entre los botones
+            sx={{ width: "100%", minHeight: "100px", paddingRight: "16px" }} // Agrega padding derecho si es necesario
+           >
             {/* Botones en el extremo izquierdo */}
-            <Grid item>
+         
             <BotonEliminarAS selectedRows={selectedRows} 
-            onDelete={deleteEventoAspecto}
+            onDelete={handleDelete}
             events={events} // Pasa la lista de eventos
-      
             />
-            </Grid>
+               {/* Botones en el extremo derecho */}
+              <BotonAddNew />
 
-            {/* Botones en el extremo derecho */}
-            <Grid item>
-              <BotonAddNew/>
+              
               <FormAspectoModal/>
-             
-            </Grid>
-          </Grid>
-          <Grid
-           item
-           sx={{
-             flex: 1, // Hace que este contenedor use todo el espacio disponible
-            height: "calc(100vh - 120px)", // Ajusta la altura si es necesario (restando los botones)
-            
-            }}
-          >
+            </Box>
+            <Box sx={{ flex: 1, height: "calc(100vh - 120px)" }}>
           <DataTable
-         columns={columns}
-         data={events} 
-         highlightOnHover
-         noDataComponent="No hay datos disponibles" // Personaliza el mensaje si no hay datos
-        //  selectableRows
-        //  onSelectedRowsChange={data=>console.log('selector', data) }
-         fixedHeader
-         responsive
-         className="mi-tabla"
-         pagination
-         
-      />
-
-          </Grid>
-             
-      
-         
-    
-    
-    </Grid>
-  
+          
+            columns={columns}
+            data={events} 
+            highlightOnHover
+            noDataComponent="No hay datos disponibles" // Personaliza el mensaje si no hay datos
+            //  selectableRows
+            //  onSelectedRowsChange={data=>console.log('selector', data) }
+            fixedHeader
+            responsive
+            className="mi-tabla"
+            pagination   
+          />
+          </Box>  
+    </Box> 
 );
 };

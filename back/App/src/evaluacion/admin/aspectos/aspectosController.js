@@ -1,4 +1,4 @@
-//const express=require('express');
+
 const Aspecto= require('./aspectos.service');
 const Pregunta = require('../preguntas/preguntas.service');
 const {response}=require('express');

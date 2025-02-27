@@ -1,7 +1,7 @@
 const {response} = require('express');
 const Pregunta= require('./preguntas.service');
 const Aspecto= require('../aspectos/aspectos.service');
-const Respuesta=require('../respuestas/respuestas.service');
+const Respuesta=require('../opcionesRespuestas/respuestas.service');
 
 const getPreguntas=async(req=response, res)=>{
     try {

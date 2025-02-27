@@ -83,9 +83,6 @@ export const useAuthStore = () => {
 
     }
 
-
-
-
   return {
      ///propiedades
      status, 

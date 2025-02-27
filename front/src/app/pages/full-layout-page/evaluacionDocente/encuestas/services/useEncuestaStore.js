@@ -9,6 +9,20 @@ export const useEncuestaStore = () => {
 
     const dispatch=useDispatch();
     const{encuetaEvents,activeEncuesta}=useSelector(state=>state.encuesta);
+    // const [tipoEncuesta, settipoEncuesta] = useState([])
+
+    // const listarTipoEncuesta = async()=>{
+    //     try {
+    //         const respuesta= await noahApi.get('/evaDocente/listTipoEncuesta');
+    //         console.log('lista', respuesta.data );
+    //         settipoEncuesta(respuesta.data.data);//guarda los datos en el estado 
+    //     } catch (error) {
+    //         console.log('error al caragar la lista tipo encuesta',error);
+            
+    //     }
+
+    // };
+    
     ///accion 
     const setActivarEventEncuesta=(encuestaEvent)=>{//evento creado
      dispatch(activarEvent(encuestaEvent))
@@ -46,11 +60,9 @@ export const useEncuestaStore = () => {
                           Swal.fire('Error', 'No se pudo actualizar la encuesta', 'error');
                         }
             }else {
-                // Si no tiene ID, crear
-                ///const { id, ...encuestaData } = encuestaEvent; // Desestructuramos para eliminar el id
-      
+            
                 const response = await noahApi.post('/evaDocente/createEncuesta', encuestaEvent);
-                console.log('Crear encuesta con datos:', encuestaData);
+                //console.log('Crear encuesta con datos:', encuestaEvent);
                 if (response && response.data && response.data.encuesta) {
                   const data = response.data;
                   dispatch(addEncuesta({ ...encuestaEvent, id: data.encuesta.id })); // Aquí recibimos el id generado por el backend
@@ -79,10 +91,13 @@ export const useEncuestaStore = () => {
      ////propiedades 
      encuetaEvents,
      activeEncuesta,
+    // tipoEncuesta,
    //metodos 
    setActivarEventEncuesta,
    listarEncuesta,
-   startEncuesta
+   startEncuesta,
+
+   //listarTipoEncuesta,
   }
   
   

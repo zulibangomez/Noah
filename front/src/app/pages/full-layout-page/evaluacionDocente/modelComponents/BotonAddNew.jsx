@@ -1,32 +1,49 @@
 import { useSelector } from "react-redux"
 import { useUiStoreAsp } from "../../../../../hooks"
 import { useAspectoStore } from "../../../../../app/pages/full-layout-page/evaluacionDocente/aspectos/services/useAspectoStore";
-import { Grid,  Button } from "@mui/material"
+import { Grid,  Button, Box, Fab } from "@mui/material"
 import { AddOutlined } from "@mui/icons-material";
+import ControlPointSharpIcon from '@mui/icons-material/ControlPointSharp';
+import { useEffect } from "react";
+import { useEncuestaStore } from "../encuestas";
 //import { FormAspectoModal } from "../aspectos";
 
 export const BotonAddNew = () => {
     const {openDateModal}=useUiStoreAsp();
     const{setActivarEvent}=useAspectoStore();
-
-    const handleclickNew=()=>{
-        setActivarEvent(null);//se envia en null para que limpie el formulario 
-        openDateModal();
-    };
+    const{setActivarEventEncuesta}=useEncuestaStore()
+    const handleclickNew = () => {
+      console.log("Abriendo modal...");
+      setActivarEvent(null);
+      setActivarEventEncuesta(null);
+      openDateModal();
+  };
 
   return (
 
     
-    <Grid
-    container 
-    justifyContent="flex-end" // Alinea al lado derecho
+    <Box
+    display="flex"
+    justifyContent="flex-end" // Alinea a la derecha
     alignItems="center" // Centra verticalmente
+    sx={{ width: "100%", paddingRight: 2 }} // Asegura que ocupe todo el ancho disponible
     >
-    <Button variant="contained" color="btnAdd" size="small"  onClick={handleclickNew} startIcon={<AddOutlined />}>
-    
-    </Button>
+    <Fab
+    color="success" // Usa "primary" o personaliza con theme
+    size="medium" // "small", "medium" o "large"
+    onClick={handleclickNew}
+    sx={{
+      width: 56, // Tamaño estándar de un FAB mediano
+      height: 56, 
+      minWidth: 56,
+      borderRadius: "50%", // Asegura que siempre sea redondo
+      boxShadow: 3, // Agrega una ligera sombra
+    }}
+  >
+    <AddOutlined fontSize="medium" /> {/* Tamaño adecuado para el icono */}
+  </Fab>
     
   
-    </Grid>
+    </Box>
   )
 }

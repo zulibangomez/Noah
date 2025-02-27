@@ -1,0 +1,286 @@
+/*--------- MODAL ESTILOS ---------*/
+.modal {
+    background: rgb(250, 250, 250);
+    border-radius: 10px; /* Bordes más redondeados */
+    width: 90%; 
+    max-width: 450px; /* Ajuste del tamaño */
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(255, 255, 255, ); /* Sombra para resaltar */
+    box-sizing: border-box;
+}
+
+.modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.modal-fondo {
+    background-color: rgba(255, 255, 255); /* Fondo oscuro semitransparente */
+    position: fixed;
+    top: 0;
+    left: 30%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+/*--------- CAMPOS DE ENTRADA ---------*/
+input, select {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #2874a6;
+    outline: none;
+    box-shadow: 0px 0px 5px rgba(146, 195, 248, 0.5);
+}
+
+/*--------- BOTÓN ---------*/
+.btn-guardar {
+    background-color: #2874a6;
+    color: white;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar:hover {
+    background-color: #2874a6;
+}
+
+/*--------- DATEPICKER ---------*/
+ /* Asegurar que el fondo del DatePicker sea sólido */
+ .react-datepicker {
+    background-color: white !important;
+    z-index: 10000 !important;
+    position: absolute !important;
+    border-radius: 8px !important;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3) !important;
+  }
+  
+  /* Evitar que el texto de fondo sea visible */
+  .react-datepicker__month-container,
+  .react-datepicker__header,
+  .react-datepicker__time-container {
+    background-color: white !important;
+  }
+
+.react-datepicker__header {
+    background-color: #2874a6 !important;
+    color: white !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: #2874a6!important;
+    color: white !important;
+}
+
+/* Ajustar la posición del DatePicker */
+
+  /* Evitar que los elementos del DatePicker se vean fuera de lugar */
+  .react-datepicker__time-list {
+    padding: 0 !important;
+    text-align: center !important;
+  }
+  .react-datepicker {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+  }
+  /*--------- RESPONSIVE ---------*/
+/* Para pantallas de tablet (menos de 768px) */
+@media (max-width: 768px) {
+    .modal {
+        width: 95%;
+        max-width: 400px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        max-width: 400px;
+    }
+
+    input, select, textarea {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .btn-guardar {
+        font-size: 16px;
+        padding: 10px;
+    }
+}
+
+/* Para pantallas de móvil (menos de 480px) */
+@media (max-width: 480px) {
+    .modal {
+        width: 100%;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    .modal-content {
+        width: 100%;
+        max-width: 350px;
+        padding: 15px;
+    }
+
+    input, select, textarea {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .btn-guardar {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+
+.fecha-container {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Fondo del modal */
+  .custom-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    z-index: 1000;
+  }
+  
+  /* Fondo oscuro al abrir el modal */
+  .custom-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+  /* Título */
+  .custom-modal h2 {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  /* Inputs y select */
+  .custom-modal input,
+  .custom-modal select,
+  .custom-modal textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 12px;
+    border: 1px solid #d1d1d1;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .custom-modal input:focus,
+  .custom-modal select:focus,
+  .custom-modal textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.3);
+    outline: none;
+  }
+  
+  /* Botón de guardar */
+  .custom-modal .save-button {
+    background: #007bff;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease-in-out, background 0.3s;
+  }
+  
+  .custom-modal .save-button:hover {
+    background: #0056b3;
+    transform: scale(1.05);
+  }
+  
+  /* Botón de cerrar */
+  .close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+  
+  .close-button:hover {
+    background: #0056b3;
+    transform: rotate(90deg);
+  }
+  
+  /* Responsivo para pantallas pequeñas */
+  @media (max-width: 480px) {
+    .custom-modal {
+      width: 95%;
+      padding: 15px;
+    }
+  
+    .custom-modal h2 {
+      font-size: 22px;
+    }
+  
+    .custom-modal input,
+    .custom-modal select,
+    .custom-modal textarea {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .custom-modal .save-button {
+      font-size: 16px;
+      padding: 10px;
+    }
+  }

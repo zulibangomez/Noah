@@ -5,13 +5,15 @@ const { validarCampos } = require('../../../middlewares/validarcampos');
 
 const {validarJWT}= require('../../../middlewares/validarjwt');
 const {getPreguntas,crearPreguntas,actualizarPreguntas,eliminarPreguntas, buscarpreguntaPorAaspecto, getTipoPreguntas}=require('../../src/evaluacion/admin/preguntas/preguntasController');
-const { getRespuestas, crearRespuestas, actualizarRespuestas, eliminarRespuestas } = require('../../src/evaluacion/admin/respuestas/respuestasController');
-const {crearEncuesta,getEncuesta,actualizarEncuesta,eliminarEncuesta}=require('../../src/evaluacion/admin/encuestas/encuestaController');
+const { getRespuestas, crearRespuestas, actualizarRespuestas, eliminarRespuestas } = require('../../src/evaluacion/admin/opcionesRespuestas/respuestasController');
+const {crearEncuesta,getEncuesta,actualizarEncuesta,eliminarEncuesta, listarTipoEncuesta}=require('../../src/evaluacion/admin/encuestas/encuestaController');
 const {getpersEvaluadora, buscarpersonaEvaluadora}= require('../../src/evaluacion/admin/persEvaluadora/persEvaluadoraController');
 const { datosdocente } = require('../../src/evaluacion/estudiantes/consultaDocente/infoDocenteController');
 const { datosEstudiante } = require('../../src/evaluacion/estudiantes/consultaEstudiante/infoEstudianteController');
 const { getAspectos, crearAspectos, eliminarAspectos, actualizarAspectos } = require("../../src/evaluacion/admin/aspectos/aspectosController");
 const { isDate } = require("../../../helpers/isDate");
+const { getEncuestaPreguntas } = require("../../src/evaluacion/admin/encuestasPreguntas/encuestaPreguntas.controller");
+
 
 
 //router.use(validarJWT);// se valida en todas las rutas 
@@ -73,6 +75,7 @@ router.delete('/deleteRes/:id', eliminarRespuestas);
 /////////***************************************************** */////////////////////
 
 router.get('/listEncuesta', getEncuesta);
+router.get('/listTipoEncuesta',listarTipoEncuesta );//para lista tipo encuesta 
 router.post('/createEncuesta',
     // [
     //     check('nombre', 'El titulo es obligatorio').not().isEmpty(),
@@ -97,7 +100,11 @@ router.delete('/deleteEncuesta/:id', eliminarEncuesta);
 router.get('/listEvaluador',getpersEvaluadora);
 router.get('/buscarEvaluador/:id',buscarpersonaEvaluadora);
 
+///////////////////////encuestasPreguntas/////////////////
+router.get('/listEncuestaPregunta/:id',getEncuestaPreguntas);
+
 /////////////////////VISTA ESTUDIANTE CONSULTA DOCENTES Y DATOS ESTUDIANTES ///
+
 
 
 

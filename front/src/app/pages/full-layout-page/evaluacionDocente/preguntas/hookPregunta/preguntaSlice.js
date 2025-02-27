@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
     name: 'pregunta',
     initialState: {
         cargandoEventos: true,
-        events: [],
+        eventsP: [],
         activeEvent: null,
     },
 reducers: {
@@ -13,15 +13,15 @@ reducers: {
       onListarPregunta: (state, { payload = [] }) => {
         state.cargandoEventos = false;
         payload.forEach((event) => {
-          const existe = state.events.some((dbPregunta) => dbPregunta.id === event.id);
+          const existe = state.eventsP.some((dbPregunta) => dbPregunta.id === event.id);
           if (!existe) {
-            state.events.push(event);
+            state.eventsP.push(event);
           }
         });
       },
       
       actualizarPregunta: (state, {payload}) => {
-        state.events = state.events.map((event) =>{
+        state.eventsP = state.eventsP.map((event) =>{
           if (event.id === payload.id) {
               return payload;
           }
@@ -30,16 +30,16 @@ reducers: {
           
       },
       deletePregunta: (state, { payload }) => {
-        state.events = state.events.filter((event) => event.id !== payload);
+        state.eventsP = state.eventsP.filter((event) => event.id !== payload);
         if (state.activeEvent?.id === payload) {
           state.activeEvent = null;
         }
       },
       addEventPregunta: (state, { payload }) => {
         console.log('Payload recibido:', payload);
-        const existe = state.events.some((event) => event.id === payload.id);
+        const existe = state.eventsP.some((event) => event.id === payload.id);
           if (!existe) {
-            state.events.push(payload);
+            state.eventsP.push(payload);
           } else {
             Swal.fire('Error', 'La pregunta ya existe.', 'error');
           }
@@ -48,7 +48,7 @@ reducers: {
 
       onLimpiarPregunta: (state) => {
         state.cargandoEventos = true;
-        state.events = [];
+        state.eventsP = [];
         state.activeEvent = null;
       },
     },

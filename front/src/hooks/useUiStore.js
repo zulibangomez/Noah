@@ -10,9 +10,14 @@ export const useUiStoreAsp = () => {
 
   // Métodos para abrir y cerrar el modal
   const openDateModal = () => {
-    if (!isDateModalOpen) {
-      dispatch(onOpenDateModal());
+    console.log("Intentando abrir el modal. Estado actual:", isDateModalOpen);
+    if (isDateModalOpen) {
+      console.warn("El modal ya está abierto, evitando duplicación.");
+      return; // Evita que se ejecute nuevamente
     }
+    
+    console.log("Abriendo modal...");
+    dispatch(onOpenDateModal());
   };
   const closeDateModal = () => dispatch(onCloseDateModal());
  

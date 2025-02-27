@@ -41,10 +41,12 @@ export const AuthVistaGeneral = ({ children, titulo = '' }) => {
          
             <Card className="shadow" style={{ borderRadius: '8px' }}>
               <Card.Body>
-                <Row className="text-center">
+              <Row className="text-center">
+                <Col xs={12}> {/* Se usa correctamente */}
                   <img src={logo} alt="User Icon" className="background-logo" />
                   <Card.Title as="h5" className="mb-3">{titulo}</Card.Title>
-                </Row>
+                </Col>
+              </Row>
               
                 {children}
                 

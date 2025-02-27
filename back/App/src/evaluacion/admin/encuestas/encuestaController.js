@@ -14,14 +14,17 @@ const getEncuesta=async(req=response, res)=>{
             ok:false,
             msg:'no lis cuestionario' })
     }
-   
-
 }
-
-const crearEncuesta=async(req=response, res)=>{
-
-
-    
+const listarTipoEncuesta=async(req=response, res)=>{
+    try {
+        const params=req.body;
+        const resul= await Encuesta.listarTipoEncuesta(params);
+        return res.status(202).json({msg:'lista tipo de encuesta', data:resul})
+    } catch (error) {
+        console.log('error al listar tipo de encuesta',error);
+    }
+}
+const crearEncuesta=async(req=response, res)=>{ 
     try {
         const params=req.body;
         //console.log('llega encuesta ', params);
@@ -42,8 +45,7 @@ const crearEncuesta=async(req=response, res)=>{
         //     return res.status(404).json({msg:'no valido periodo'})
         // }
         const result = await Encuesta.crearEncuesta(params);
-        return res.status(202).json({msg:'creado Encuesta', data:result})
-        
+        return res.status(202).json({msg:'creado Encuesta', data:result})   
     } catch (error) {
         console.log('este es error',error);
         
@@ -121,5 +123,6 @@ const actualizarEncuesta=async(req=response, res)=>{
     crearEncuesta,
     getEncuesta,
     actualizarEncuesta,
-    eliminarEncuesta
+    eliminarEncuesta,
+    listarTipoEncuesta
  }

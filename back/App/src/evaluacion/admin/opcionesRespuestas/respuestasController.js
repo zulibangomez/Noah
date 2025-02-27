@@ -44,16 +44,14 @@ const actualizarRespuestas=async(req, res)=>{
        
         const idrespuesta=params.id; 
         const preguntaid = Number(params.id_pregunta );
-        console.log('params zulllyy',preguntaid);
+        //console.log('params zulllyy',preguntaid);
         if (!preguntaid) {
             
             return res.status(400).json({msg: "id_pregunta no es válido"});
         }
         const existeidRespu= await Respuesta.buscarRespuesta(idrespuesta);
         const existeidPreg= await Pregunta.buscarpregunta(preguntaid);
-        console.log('pregunta iddd',existeidPreg);
-        
-        
+        //console.log('pregunta iddd',existeidPreg);
 
         if(!existeidRespu && !existeidPreg){
             return res.status(404).json({msg:'no existe Respuesta'})
