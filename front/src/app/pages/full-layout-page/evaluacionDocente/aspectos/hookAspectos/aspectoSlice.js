@@ -25,7 +25,7 @@ reducers: {
         }
       });
     
-      console.log("Estado actualizado en events:", state.events);
+     // console.log("Estado actualizado en events:", state.events);
   },
 
     actualizarAspecto:(state,{payload})=>{

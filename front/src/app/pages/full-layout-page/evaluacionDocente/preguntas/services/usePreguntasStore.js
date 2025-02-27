@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 export const usePreguntasStore = () => {
 
     const dispatch=useDispatch();
-    const {events, activeEvent}=useSelector(state=>state.pregunta)
+    const {eventsP, activeEvent}=useSelector(state=>state.pregunta)
 
 
     const setActivarEvent=(preguntaEvent)=>{///el evento creado 
@@ -82,7 +82,7 @@ export const usePreguntasStore = () => {
 
 return{
     ///propiedades
-    events, 
+    eventsP, 
     activeEvent, 
     //metodos
     // addPreguunta,

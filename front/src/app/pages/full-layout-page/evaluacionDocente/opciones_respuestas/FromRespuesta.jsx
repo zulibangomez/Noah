@@ -15,9 +15,12 @@ const customStyles = {
     bottom: 'auto',
     marginRight: '-50%',
     transform: 'translate(-50%, -50%)',
+    padding: '20px',
+    borderRadius: '10px',
+    width: '400px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.2)',
   },
 };
-
 Modal.setAppElement('#root');
 
 export const FromRespuesta = () => {
@@ -134,12 +137,12 @@ export const FromRespuesta = () => {
 
   return (
     <Modal
-      isOpen={isDateModalOpen}
-      onRequestClose={onCloseModal} // Corregido "onRequestClise" a "onRequestClose"
-      overlayClassName="modal-fondo"
-      style={customStyles}
+    isOpen={isDateModalOpen} // Estado de apertura del modal
+    onRequestClose={onCloseModal}// Cierra el modal al hacer clic fuera
+    style={customStyles}
     >
-      <Typography>Respuestas</Typography>
+    <Typography variant="h5" sx={{ mb: 2, textAlign: 'center' }}>Opciones de Respuestas</Typography>
+   
       <form onSubmit={onSubmit}>
         <TextField
           label="Nombre"

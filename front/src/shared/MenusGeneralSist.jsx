@@ -1,4 +1,4 @@
-import { Typography } from '@mui/material';
+import { Stack, Button,Typography, Box } from '@mui/material';
 
 
 import { AddOutlined } from '@mui/icons-material';
@@ -10,48 +10,52 @@ import { PreguntaView } from '../app/pages/full-layout-page/evaluacionDocente/pr
 import { LogoView } from './LogoView';
 
 import { RespuestaWiew } from '../app/pages/full-layout-page/evaluacionDocente/opciones_respuestas/RespuestaWiew';
-import { EncuestaView } from '../app/pages/full-layout-page/evaluacionDocente/encuestas';
+import { Addcuestionario, EncuestaView } from '../app/pages/full-layout-page/evaluacionDocente/encuestas';
+import { ConfiGeneralAs } from '../app/pages/full-layout-page/evaluacionDocente/ConfiGeneralAs';
 
-
-
-
-
+import { Link } from "react-router-dom";
+import { AppTheme } from '../theme';
+//import { Button } from 'bootstrap';
 
 export const MenusGeneralSist = () => {
   return (
 
   
-    <MenuLayout>
-         {/* <Typography>Aliquip nulla excepteur tempor nostrud adipisicing in aliquip officia Lorem incididunt duis eiusmod laborum eiusmod. Labore et do irure non excepteur irure esse. Excepteur id incididunt id enim voluptate incididunt laborum pariatur do eu velit. Ullamco deserunt minim voluptate incididunt. Sint incididunt et laboris ipsum officia esse elit magna incididunt.</Typography> */}
+    <nav>
+      <Box display="flex" justifyContent="center" sx={{ width: "100%", padding: 2 }}>
+      <Stack direction="row" spacing={2}>
+      <Button component={Link} to="/" variant="contained" color="primary">
+        Inicio
+      </Button>
+      <Button component={Link} to="/aspectos" variant="contained" color="secondary">
+        Aspectos
+      </Button>
+      <Button component={Link} to="/preguntas" variant="contained" color="success">
+        Preguntas
+      </Button>
+      <Button component={Link} to="/respuestas" variant="contained" color="warning">
+        Opciones de respuesta
+      </Button>
+      <Button component={Link} to="/encuestas" variant="contained" color="primary">
+        encuestas
+      </Button>
+      <Button component={Link} to="/adicion" variant="contained" color="primary">
+        encuestas
+      </Button>
+     
+    </Stack>
+      </Box>
     
-
-    {/* <ModalAsp/> */}
+  </nav> 
+    
+  );
+}
+{/* <ModalAsp/> */}
     {/* <AspectosView/> */}
     {/* <PreguntaView/> */}
-    {/* <Edwin/> */}
+    {/* <ConfiGeneralAs/> */}
     {/* <LogoView/> */}
     {/* <RespuestaWiew/> */}
-    <EncuestaView/>
+    {/* <EncuestaView/> */}
+    {/* <Addcuestionario/> */}
   
-    {/* <IconButton
-    size='large'
-    sx={{
-      color:'white',
-      backgroundColor:'primary.main',
-      ':hover':{backgroundColor:'primary.main', opacity:0.9},
-      position:'fixed',
-      right:50,
-      bottom:50
-    }}
-    >
-    <AddOutlined sx={{fontSize:30}}/>
-    </IconButton> */}
-    </MenuLayout> 
-    
-   
-     
-    
-    
-    
-  )
-}

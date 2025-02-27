@@ -6,9 +6,10 @@ import { FormPreguntaModal } from "./FormPreguntaModal";
 import { BotonAddNew, BotonDelete, BotonActualizar, BotonAddPregunta} from "../modelComponents";
 import '../../../../../styles.css';
 import { BotonEliminarAS } from "../modelComponents/BotonEliminarAS";
+import { MenusGeneralSist } from "../../../../../shared/MenusGeneralSist";
 
 export const PreguntaView = () => {
-  const { listPregunta, events, eliminarPregunta, setActivarEvent } = usePreguntasStore();
+  const { listPregunta, eventsP, eliminarPregunta, setActivarEvent } = usePreguntasStore();
   const [selectedRows, setselectedRows] = useState([]);
 
   // Cargar las preguntas cuando se monta el componente
@@ -24,10 +25,10 @@ export const PreguntaView = () => {
   }, [listPregunta]);
 
   // Columnas para la tabla
-  const columns = events.length > 0
+  const columns = eventsP.length > 0
     ? [
-        ...Object.keys(events[0])
-          .filter((key) => key !== "id" && key !== "estado")
+        ...Object.keys(eventsP[0])
+          .filter((key) => key !== "id" && key )
           .map((key) => ({
             name: key.charAt(0).toUpperCase() + key.slice(1),
             selector: (row) => row[key],
@@ -48,9 +49,8 @@ export const PreguntaView = () => {
     : [];
 
   // Filtrar los datos únicos
-  const data = [...new Map(events.map((item) => [item.id, item])).values()];
+  const data = [...new Map(eventsP.map((item) => [item.id, item])).values()];
   //console.log("Datos únicos:", data);
-
   // Maneja las filas seleccionadas
   const guardaRowSelected = (state) => {
     // Actualizar el estado con los `id`s de las filas seleccionadas
@@ -60,6 +60,7 @@ export const PreguntaView = () => {
 
   return (
     <Grid container direction="column" sx={{ padding: 1 }}>
+      <div><MenusGeneralSist/></div>
       <Grid
         container
         direction="row"
@@ -68,6 +69,7 @@ export const PreguntaView = () => {
         spacing={1}
         sx={{ marginBottom: 2 }}
       >
+        
         {/* Botones en el extremo izquierdo */}
         <Grid item>
           <BotonEliminarAS

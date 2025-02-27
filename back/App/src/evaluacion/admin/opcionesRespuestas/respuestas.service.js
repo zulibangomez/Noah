@@ -21,15 +21,17 @@ async function crearRespuesta(params) {
 async function listarRespuestas(params) {
     try {
         const query=`SELECT 
-                ore.id,
-                p.subtitulo as preguntas,
-                ore.nombre as respuestas,
+                ore.id,			
+                ore.nombre as opciones_respuestas,
                 ore.imagen, 
                 ore.valor,
                 ore.respuestaadd,
-                ore.id_pregunta 
-                from eva.opciones_respuestas ore
-                INNER JOIN eva.preguntas p on p.id=ore.id_pregunta order by ore.id DESC`
+								CASE 
+	              WHEN ore.estado = true THEN 'Activo'
+	              ELSE 'Desactivado'
+							 END as estado
+               from eva.opciones_respuestas ore
+               order by ore.id DESC`
         const result= await pool.query(query)
         //console.log('respuesta',result.rows);
         return result.rows;

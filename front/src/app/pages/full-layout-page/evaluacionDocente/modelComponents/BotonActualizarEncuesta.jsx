@@ -8,12 +8,12 @@ import { useEncuestaStore } from '../encuestas';
 export const BotonActualizarEncuesta = ({row}) => {
     const {openDateModal}=useUiStoreAsp();
     const{setActivarEventEncuesta}=useEncuestaStore();
-
+     
     
 
     const handleUpdate=()=>{
       
-        //onsole.log("Datos de la fila seleccionada:", row); // Verifica que `row` tenga contenido
+        console.log("Datos de la fila seleccionada:", row); // Verifica que `row` tenga contenido
         if (!row) {
           console.error("No se recibió un dato válido en `row`");
           return;

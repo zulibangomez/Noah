@@ -19,8 +19,6 @@ export const MenuLayout = ({children}) => {
         <Toolbar/>
           {children}
       </Box>
-  
-  
   </Box>
     
   )

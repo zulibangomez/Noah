@@ -49,8 +49,6 @@ export const useForm = ( initialForm = {}, formValidations = {}) => {
         setFormValidation( formCheckedValues );
     }
 
-
-
     return {
         ...formState,//devuelve todos los valores del formulario cada campo 
         formState,//el estado completa del formulario 

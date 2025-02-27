@@ -1,11 +1,6 @@
 import noahApi from "../../app/pages/full-layout-page/api/noahApi";
 
-
-
 export const menuservice = async() => {
- 
- 
-
     try {
         const { data } = await noahApi.get('/menu/menuLis');
         console.log('llego a qui ', data );

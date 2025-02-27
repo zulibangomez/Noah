@@ -1,7 +1,7 @@
 import {Google} from '@mui/icons-material';
 import {  useEffect } from "react";
 import Swal from 'sweetalert2';
-import { Grid, TextField, Typography, Button } from '@mui/material';
+import { Grid, TextField, Typography, Button, Grid2, Box } from '@mui/material';
 
 import { Link } from 'react-router-dom';
 import { AuthVistaGeneral } from '../layout/AuthVistaGeneral';
@@ -13,9 +13,6 @@ const loginFormFields={
   nombre_usuario:'',
   clave_acceso:'',
 }
-
-
-
 
 export const LoginPage = () => {
 
@@ -38,8 +35,6 @@ useEffect(() => {
   }
 
 }, [errorMessage])
-
-
 
   return (
     <AuthVistaGeneral titulo='Inicio de sesión'>

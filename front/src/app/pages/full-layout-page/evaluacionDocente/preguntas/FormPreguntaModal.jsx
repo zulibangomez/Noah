@@ -186,7 +186,7 @@ useEffect(() => {
     onRequestClose={onCloseModal}// Cierra el modal al hacer clic fuera
     style={customStyles}
    // className="modal"
-    overlayClassName="modal-fondo"
+    //overlayClassName="modal-fondo"
         >
           <Typography id="modal-modal-title" variant="h6" component="h2">
                       PREGUNTA

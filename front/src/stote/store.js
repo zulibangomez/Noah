@@ -17,8 +17,5 @@ export const store = configureStore({
     tPregunta:tipoPreguntaSlice.reducer,
     respuesta:respuestaSlice.reducer,
     encuesta:encuestaSlice.reducer,
-
-
-    
   },
 })

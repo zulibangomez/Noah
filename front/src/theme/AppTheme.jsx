@@ -4,7 +4,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { theme } from './'; 
 // configuracion del tema principal  y la parametro children es el tema principal del app
 
-
 export const AppTheme = ({children}) => {
   return (
     <ThemeProvider theme={theme}>

@@ -3,12 +3,13 @@ import { useUiStoreAsp } from '../../../../../hooks';
 import { useAspectoStore } from '../aspectos';
 import { Grid,  Button } from "@mui/material"
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import { useEncuestaStore } from '../encuestas';
 
 
 export const BotonActualizar = ({row}) => {
     const {openDateModal}=useUiStoreAsp();
     const{setActivarEvent}=useAspectoStore();
-
+const {setActivarEventEncuesta}=useEncuestaStore();
     
 
     const handleUpdate=()=>{
@@ -20,6 +21,7 @@ export const BotonActualizar = ({row}) => {
         }
       
         setActivarEvent(row);
+        setActivarEventEncuesta(row)
         openDateModal();
 
     };

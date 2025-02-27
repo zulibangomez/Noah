@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { BotonActualizarEncuesta, BotonAddNew, BotonDelete } from '../modelComponents';
 import imagen from '../../../../../assets/img/carita_feliz.jpg';
 import { FromRespuesta } from './FromRespuesta';
+import { MenusGeneralSist } from '../../../../../shared/MenusGeneralSist';
 
 //import { activaEvent } from './hookRespuestas/respuestasSlice';
 
@@ -46,19 +47,27 @@ export const RespuestaWiew = () => {
   // Filtrar los eventos según el término de búsqueda
   const filteredEvents = eventsResp.filter((evento) => {
     const { preguntas, respuestas } = evento;
-    return preguntas.toLowerCase().includes(searchTerm) || respuestas.toLowerCase().includes(searchTerm);
+    
+    const preguntasTexto = preguntas ? preguntas.toLowerCase() : "";
+    const respuestasTexto = respuestas ? respuestas.toLowerCase() : "";
+    const search = searchTerm.toLowerCase();
+  
+    return preguntasTexto.includes(search) || respuestasTexto.includes(search);
   });
 
   // Se limita la cantidad de filas por página
   const paginatedEvents = filteredEvents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage);
 
   return (
+    
     <div style={{ padding: '20px' }}>
+     <div><MenusGeneralSist /></div>
       <h5 style={{ textAlign: 'center' }}>Lista de Respuestas</h5>
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
         <BotonAddNew  />
         <FromRespuesta />
       </div>
+    
 
       {/* Buscador */}
       <TextField
@@ -75,27 +84,28 @@ export const RespuestaWiew = () => {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Preguntas</TableCell>
                 <TableCell>Respuestas</TableCell>
                 <TableCell>Imagen</TableCell>
                 <TableCell>Valor</TableCell>
                 <TableCell>Respuesta Adicional</TableCell>
+                <TableCell>Estado</TableCell>
                 <TableCell>Acciones</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {paginatedEvents.map((evento) => {
-                const { preguntas, respuestas, valor, id, respuestaadd } = evento;///desestructurar
+                const {  opciones_respuestas, valor, id, respuestaadd, estado} = evento;///desestructurar
                 return (
                   <TableRow key={id}>
-                    <TableCell>{preguntas || '-'}</TableCell>
-                    <TableCell>{respuestas || '-'}</TableCell>
+                   
+                    <TableCell>{opciones_respuestas || '-'}</TableCell>
                     <TableCell>
                       <img src={imagen} style={{ width: '40px', height: '40px', borderRadius: '50%' }} alt="Imagen" />
                     </TableCell>
                     <TableCell>{valor !== undefined ? valor : '-'}</TableCell>
                    
                     <TableCell>{respuestaadd || '-'}</TableCell>
+                    <TableCell>{estado || '-'}</TableCell>
                     
                     <TableCell>
                       <BotonDelete 
