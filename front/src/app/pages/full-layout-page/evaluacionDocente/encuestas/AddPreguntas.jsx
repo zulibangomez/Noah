@@ -8,7 +8,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useLocation } from "react-router-dom";
 
 export const AddPreguntas = () => {
-  const {listarEncuestaPre, evenEncuestaPre}=useEncuestaPreguntas()
+  const {listarEncuestaPre, evenEncuestaPre=[]}=useEncuestaPreguntas()
    const [encuestaPre, setencuestaPre] = useState();
 
    const location = useLocation();
@@ -25,7 +25,7 @@ export const AddPreguntas = () => {
   return (
     <div>
       <h2>Preguntas de la Encuesta</h2>
-      {evenEncuestaPre.length > 0 ? (
+      {evenEncuestaPre && evenEncuestaPre.length > 0 ? (
         evenEncuestaPre.map((pregunta, index) => (
           <Accordion key={index}>
             <AccordionSummary

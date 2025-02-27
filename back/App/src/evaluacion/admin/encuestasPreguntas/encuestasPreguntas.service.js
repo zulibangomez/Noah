@@ -1,12 +1,7 @@
 const pool=require('../../../../../database/connexion');
 
-async function listEncuestaPre(params) {
+async function listEncuestaPre(id) {
     try {
-        const id = parseInt(params.id, 10); // para convertimos a número
-
-        if (isNaN(id)) { 
-            throw new Error("El ID de la encuesta no es válido");
-        }
         const query=`select 
         epre.id,
         pre.titulo AS pregunta,
