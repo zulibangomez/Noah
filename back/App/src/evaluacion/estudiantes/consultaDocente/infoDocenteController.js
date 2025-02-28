@@ -3,6 +3,8 @@ const InfoDocente = require('../consultaDocente/infoDocente.service');
 
 const datosdocente=async(req, res=response)=>{
     try {
+        console.log("req",req);
+        
         const params= req.body;
         const codigo=params.codigo
 

@@ -1,0 +1,272 @@
+/* ------------------------------------------------ css para el Estudiate --------------------------------------------------------------------- */
+.cardEstudiante {
+  width: 100%;
+  max-width: none; /* Ocupa todo el ancho */
+  background: #f1f8ff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  /* z-index: 1000; Asegura que esté encima */
+}
+
+.card-perfil {
+  background: #008cba;
+  color: whitesmoke;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-datos {
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: white;
+}
+
+.card-datos div {
+  flex: 1;
+}
+
+.card-foto-docente {
+  width: 110px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .cardEstudiante {
+    flex-direction: column;
+    text-align: center;
+  }
+  .card-datos {
+    flex-direction: column;
+    align-items: center;
+  }
+  .card-foto-docente {
+    width: 60px;
+    height: 60px;
+    margin-top: 10px;
+  }
+}
+
+
+/* ----------------------------------------------------- css para las tarjetas de la informacion del Docente -----------------------------------------------------------– */
+.cardEvaluador {
+  width: 350px;
+  height: 350px;
+  background: white;
+  border-radius: 32px;
+  padding: 3px;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+  transition: all 0.5s ease-in-out;
+}
+
+.cardEvaluador .profile-pic {
+  position: absolute;
+  width: calc(100% - 6px);
+  height: calc(95% - 5px);
+  top: 3px;
+  left: 3px;
+  border-radius: 29px;
+  overflow: hidden;
+  transition: all 0.5s ease-in-out 0.2s;
+  
+}
+
+.cardEvaluador .profile-pic img {
+  object-fit: cover;
+  width: 66%;
+  height: 70%;
+}
+
+.cardEvaluador .name {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+  position: absolute;
+  top: 60%;
+  left: 23%;
+  transform: translateX(-20%);
+  text-align: center;
+  z-index: 2;
+}
+
+.cardEvaluador .bottom {
+  position: absolute;
+  bottom: 8px;
+  left: 3px;
+  right: 3px;
+  background: #008cba;
+  top: 75%;
+  border-radius: 25px;
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+  overflow: hidden;
+  transition: all 0.5s ease-in-out;
+  transform: translateY(10px);
+}
+
+.cardEvaluador .bottom .content {
+  position: absolute;
+  bottom: 0;
+  left: 1.5rem;
+  right: 1.5rem;
+  height: 175px;
+}
+
+.cardEvaluador .bottom .content .name {
+  font-size: 1.1rem;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.cardEvaluador .bottom .content .about-me {
+  font-size: 0.8rem;
+  color: white;
+  margin-top: 0.4rem;
+}
+
+.cardEvaluador .bottom .bottom-bottom {
+  position: absolute;
+  bottom: 1rem;
+  left: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cardEvaluador .bottom .bottom-bottom .button {
+  background: white;
+  color: #008cba;
+  border: none;
+  border-radius: 20px;
+  font-size: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+}
+
+.cardEvaluador:hover {
+  border-top-left-radius: 55px;
+}
+
+.cardEvaluador:hover .bottom {
+  top: 20%;
+  border-radius: 90px 29px 29px 29px;
+}
+
+.cardEvaluador:hover .profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 5px solid #008cba;
+}
+
+.cardEvaluador:hover .profile-pic img {
+  width: 100%;
+  height: 100%;
+}
+
+.cardEvaluador:hover .name {
+  top: -50%;
+  font-size: 1.5rem;
+  background: transparent;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 150px;
+  justify-items: center;
+  padding: 180px;
+}
+
+/* ------------------------------------------------------------- css Boton redireccionamiento -----------------------------------------------------------------*/
+.buttonEvaluador {
+  font-family: inherit;
+  font-size: 9px;
+  /* background: linear-gradient(90deg, rgb(119, 205, 21) 0%, rgb(30, 200, 212) 50%, rgb(5, 213, 255) 100%); */
+  background: linear-gradient(90deg, rgba(21,138,190,1) 0%, rgba(9,118,121,1) 34%, rgba(38,182,96,1) 100%);
+
+  color: white; 
+  padding: 0.8em 1.2em;
+  display: grid;
+  grid-template-columns: auto 0fr;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+  transition: all 0.3s;
+  float: right;
+  
+}
+
+.buttonEvaluador:hover {
+  cursor: pointer;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+
+  grid-template-columns: auto 1fr;
+}
+
+.buttonEvaluador:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.buttonEvaluador span {
+  display: block;
+  margin-left: 0.4em;
+  transition: all 0.3s;
+}
+
+.buttonEvaluador svg {
+  transition: all 0.3s;
+}
+
+.buttonEvaluador .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  transition: all 0.3s;
+}
+
+.buttonEvaluador:hover .svg-wrapper {
+  box-shadow: 0 4px 8px rgba(20, 19, 19, 0.2);
+  margin-right: 0.5em;
+  animation: bounce 1.2s ease-in-out;
+}
+
+.text {
+  overflow: hidden;
+}
+
+@keyframes bounce {
+  0% {
+    translate: 0;
+  }
+
+  50% {
+    translate: 0 -8px;
+  }
+
+  100% {
+    translate: 0;
+  }
+}

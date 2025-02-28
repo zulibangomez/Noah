@@ -8,12 +8,12 @@ const {getPreguntas,crearPreguntas,actualizarPreguntas,eliminarPreguntas, buscar
 const { getRespuestas, crearRespuestas, actualizarRespuestas, eliminarRespuestas } = require('../../src/evaluacion/admin/opcionesRespuestas/respuestasController');
 const {crearEncuesta,getEncuesta,actualizarEncuesta,eliminarEncuesta, listarTipoEncuesta}=require('../../src/evaluacion/admin/encuestas/encuestaController');
 const {getpersEvaluadora, buscarpersonaEvaluadora}= require('../../src/evaluacion/admin/persEvaluadora/persEvaluadoraController');
-const { datosdocente } = require('../../src/evaluacion/estudiantes/consultaDocente/infoDocenteController');
 const { datosEstudiante } = require('../../src/evaluacion/estudiantes/consultaEstudiante/infoEstudianteController');
 const { getAspectos, crearAspectos, eliminarAspectos, actualizarAspectos } = require("../../src/evaluacion/admin/aspectos/aspectosController");
 const { isDate } = require("../../../helpers/isDate");
 const { getEncuestaPreguntas } = require("../../src/evaluacion/admin/encuestasPreguntas/encuestaPreguntas.controller");
-
+const { datosdocente } = require('../../src/evaluacion/estudiantes/consultaDocente/infoDocenteController');
+const { listencuesta, addencuesta } = require("../../src/evaluacion/listEncuesta/listarEncuestas/listEncuestaController");
 
 
 //router.use(validarJWT);// se valida en todas las rutas 
@@ -105,13 +105,33 @@ router.get('/listEncuestaPregunta/:id',getEncuestaPreguntas);
 
 /////////////////////VISTA ESTUDIANTE CONSULTA DOCENTES Y DATOS ESTUDIANTES ///
 
+////////// por parte del estudiante/////////
+router.post('/doc/:id', 
+    [
+        //check('codigo', 'ingrese el codigo').not().isEmpty(),
+        // check('identificacion estudiant', 'identificacion del Estuduante').not().isEmpty(),
+        // check('nombres_completos_est', 'Nombres Completos del Estudiante').not().isEmpty(),
+        // check('codigo', 'codigo del estudiante').not().isEmpty(),
+        // check('estado', 'estado: estudiante').not().isEmpty(),
+        // check('semestre_general', 'semestre general del estudiante').not().isEmpty(),
+        // check('Identificacion Docente', 'identtificacion del docente').not().isEmpty(),
+        // check('nombres_completos_docent', 'nombres completos del docente').not().isEmpty(),
+        // check('semestre_asignatura', 'semestre_asignatura docente').not().isEmpty(),
+        // check('nombre', 'nombre de la asignatura docente').not().isEmpty(),
+        // check('id_docente', 'id del docente').not().isEmpty(),
+        // check('iddocente', 'iddocente').not().isEmpty(),
+        // check('llave_encuesta', 'EVADOCENTEPROD').not().isEmpty(),
+        // check('ruta_foto_estudiante', 'foto del estudiante').not().isEmpty(),
+        // check('ruta_foto_docente', 'foto del docente').not().isEmpty(),
+        validarCampos
+
+    ],datosdocente);
+
+    //---------------------- Listar Encuesta ------------------------//
+    router.post('/listEncuesta/:id',[validarCampos],listencuesta);
+    router.post('/addListEncuesta/:id', [validarCampos], addencuesta);
 
 
-
-
-router.get('/doc/:id',
-    [check('codigo', 'ingrese el codigo').not().isEmpty(),validarCampos],
-    datosdocente);
 router.get('/estu/:id',
     [check('codigo', 'ingrese el codigo').not().isEmpty(),validarCampos],
     datosEstudiante);
