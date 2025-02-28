@@ -7,10 +7,11 @@ import { useEffect } from 'react';
 
 //import { MenusGeneralSist } from './app/pages/full-layout-page/shared/MenusGeneralSist';
 import { MenusGeneralSist } from './shared/MenusGeneralSist';
+import ListEncuestaView from './app/pages/full-layout-page/evaluacionDocente/listEncuestas/encuestas/ListEncuestaView';
 export const RuahApp = () => {
 //const authStatus='not-authenticated';
 
-const {checkAuthToken, startLogin, status}= useAuthStore();
+const {checkAuthToken,  status}= useAuthStore();
 
  useEffect(() => {
   checkAuthToken()
@@ -35,6 +36,8 @@ const {checkAuthToken, startLogin, status}= useAuthStore();
             <>
               <Route path="/" element={<MenusGeneralSist />} />
               <Route path="*" element={<Navigate to="/" />} />
+
+              <Route path="/listEncuesta" element={<ListEncuestaView to="/" />} />
             </>
           )
         }        

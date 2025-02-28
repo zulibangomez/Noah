@@ -29,6 +29,10 @@ async function buscarpersonaEvaluadora(params) {
     }
     
 }
+async function desifrar(params) {
+  
+    
+}
 module.exports={
     buscarpersonaEvaluadora,
     listarPersonasEvaluadoras

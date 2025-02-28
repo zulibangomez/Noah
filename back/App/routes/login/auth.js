@@ -14,8 +14,8 @@ const{ validarJWT}=require('../../../middlewares/validarjwt')
 router.post(
     '/onlogin',
     [
-        check('nombre_usuario', 'El usuario es obligatorio').not().isEmpty(),
-        check('clave_acceso', 'la password es obligatorio').not().isEmpty(),
+        // check('nombre_usuario', 'El usuario es obligatorio').not().isEmpty(),
+        // check('clave_acceso', 'la password es obligatorio').not().isEmpty(),
         validarCampos
     ],
     login

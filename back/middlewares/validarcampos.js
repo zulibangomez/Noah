@@ -11,7 +11,7 @@ const validarCampos=(req, res=response, next)=>{
       ok:false,
       errors:errors.mapped()//recorre y muestra el mensaje del error 
        })
-    }
+    } 
 
 next();
 }

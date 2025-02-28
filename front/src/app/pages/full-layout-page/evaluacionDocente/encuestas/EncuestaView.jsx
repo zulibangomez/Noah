@@ -2,7 +2,7 @@ import { Grid2 } from "@mui/material";
 import { useEffect, useState } from "react";
 import { FromEncuestaModal, useEncuestaStore } from "./index";
 import { BotonActualizarEncuesta, BotonAddNew,  } from "../modelComponents";
-import { useAuthStore, useUiStoreAsp } from "../../../../../hooks";
+import {  useUiStoreAsp } from "../../../../../hooks";
 
 export const EncuestaView = () => {
   const { listarEncuesta, encuetaEvents } = useEncuestaStore();
@@ -38,7 +38,7 @@ export const EncuestaView = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 animate-fadeIn">
         {encuetaEvents && encuetaEvents.length > 0 ? (
           encuetaEvents.map((evento, index) => {
-            const { id_encuesta, nombre, fecha_creacion, fecha_inicio, fecha_fin, tipo_encuestas, estado } = evento;
+            const {  nombre, fecha_creacion, fecha_inicio, fecha_fin, tipo_encuestas, estado } = evento;
             return (
               <div key={index} className="p-4 bg-gray-100 rounded shadow">
                 <h2 className="text-gray-700">{nombre}</h2>

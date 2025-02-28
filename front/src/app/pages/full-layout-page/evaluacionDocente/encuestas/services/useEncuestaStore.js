@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux"
 import { activarEvent } from '../index';
 import noahApi from "../../../api/noahApi";
-import{addEncuesta,eliminarEncuesta,actualizarEncuesta,onListarEncuesta} from '../index'
+import{addEncuesta,actualizarEncuesta,onListarEncuesta} from '../index'
 import Swal from "sweetalert2";
 
 
@@ -50,7 +50,7 @@ export const useEncuestaStore = () => {
                 ///const { id, ...encuestaData } = encuestaEvent; // Desestructuramos para eliminar el id
       
                 const response = await noahApi.post('/evaDocente/createEncuesta', encuestaEvent);
-                console.log('Crear encuesta con datos:', encuestaData);
+                
                 if (response && response.data && response.data.encuesta) {
                   const data = response.data;
                   dispatch(addEncuesta({ ...encuestaEvent, id: data.encuesta.id })); // Aquí recibimos el id generado por el backend
@@ -67,9 +67,9 @@ export const useEncuestaStore = () => {
         } 
     
 
-        const eliminarEncuesta=async()=>{
+        // const eliminarEncuesta=async()=>{
 
-        }
+        // }
 
     }
 

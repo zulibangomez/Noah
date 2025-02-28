@@ -4,7 +4,8 @@ const pool = require('../../../database/connexion');
 /////prueba login////
 async function login(params) {
   try {
-
+ console.log('clave',params);
+ 
     const name = params.nombre_usuario;
     const contra = params.clave_acceso;
     const query=`select  
@@ -15,7 +16,7 @@ async function login(params) {
         INNER JOIN usuarios u on p.id=u.id_persona where nombre_usuario = $1 and  clave_acceso =md5($2)`;
     const response = await pool.query(query,[name,contra]);
 
-   // console.log('services datos', name, contra);
+   //console.log('services datos', name, contra);
 
     if(response.rowCount==0){
       return false;

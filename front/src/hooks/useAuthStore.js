@@ -15,7 +15,7 @@ export const useAuthStore = () => {
       // dispatch(onChecking());
       try {
         const { data } = await noahApi.post('/login/onlogin', { nombre_usuario, clave_acceso });
-        ///console.log('lock',data);
+        //console.log('eeeeee',data);
         
         if (!data.id || !data.name || !data.id_usuario) { // Verifica las propiedades correctas
           console.log('El usuario no existe', data);

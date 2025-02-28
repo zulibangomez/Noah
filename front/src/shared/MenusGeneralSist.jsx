@@ -11,6 +11,8 @@ import { LogoView } from './LogoView';
 
 import { RespuestaWiew } from '../app/pages/full-layout-page/evaluacionDocente/opciones_respuestas/RespuestaWiew';
 import { EncuestaView } from '../app/pages/full-layout-page/evaluacionDocente/encuestas';
+import EvaluadorView from '../app/pages/full-layout-page/evaluacionDocente/estudiantesEvaluadores/estudiantes/EvaluadorView';
+import ListEncuestaView from '../app/pages/full-layout-page/evaluacionDocente/listEncuestas/encuestas/ListEncuestaView';
 
 
 
@@ -31,8 +33,11 @@ export const MenusGeneralSist = () => {
     {/* <Edwin/> */}
     {/* <LogoView/> */}
     {/* <RespuestaWiew/> */}
-    <EncuestaView/>
-  
+    {/* <EncuestaView/> */}
+    {/* <EstudianteEvaluador/> */}
+    <EvaluadorView/>
+    {/* <ListEncuestaView/> */}
+
     {/* <IconButton
     size='large'
     sx={{

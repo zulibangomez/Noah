@@ -24,9 +24,13 @@ const buscarpersonaEvaluadora = async(req, res)=>{
     }
 
 }
+const codigoeva = async()=>{
+
+}
 
 module.exports={
     getpersEvaluadora,
-    buscarpersonaEvaluadora
+    buscarpersonaEvaluadora,
+    codigoeva
   
 }

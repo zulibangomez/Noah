@@ -20,7 +20,7 @@ const crearUsuario= async (req, res=response) => {
 const login = async (req,res) => {
   try {
       const params = req.body;
-     // console.log('datos',params); 
+     console.log('datos',params); 
       const usuarios = await service.login(params);
       if (Array.isArray(usuarios) && usuarios.length > 0) {
         const usuario = usuarios[0]; // Obtén el primer elemento del arreglo
