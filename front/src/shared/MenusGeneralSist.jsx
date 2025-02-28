@@ -42,9 +42,6 @@ export const MenusGeneralSist = () => {
       <Button component={Link} to="/adicion" variant="contained" color="primary">
         encuestas
       </Button>
-      <Button component={Link} to="/vistaestudiante" variant="contained" color="primary">
-        vista-kevin
-      </Button>
      
     </Stack>
       </Box>
