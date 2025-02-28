@@ -1,6 +1,8 @@
 const response =require('express');
 const ListEncuesta = require('../listarEncuestas/listEncuesta.service');
 const {AddPersonasEvaluadas, AddPersonasEvaluadoras, AddResultados} = require('../listarEncuestas/listEncuesta.service');
+const TipoPregunta = require('../listarEncuestas/listEncuesta.service');
+
 
 // ---------------------- lista preguntas y respuestas ----------------------//
 const listencuesta=async(req, res=response)=>{
@@ -59,10 +61,27 @@ const addencuesta = async (req, res) => {
 };
 
 
+// ---------------------- lista tipo_preguntas ----------------------//
+const listaTipo_preguntas=async(req, res=response)=>{
+    try {
+        console.log("Ubicados en el listEncuestaController: req",req);
+
+        const params=req.body;
+        console.log('esto llega en el params: ',params);
+        
+        const tipo=params.tipo
+        
+        const result= await TipoPregunta.listaTipo_preguntas(tipo);
+        return res.status(200).json({msg: 'Lista de Encuentas', data:result})
+    } catch (error) {
+        return res.status(500).json({msg: 'Erro en el servidor, no se obtuvo la lista de Encuestas'})
+    }
+}
+
 
 
 module.exports={
     listencuesta,
     addencuesta,
-
+    listaTipo_preguntas
 }
