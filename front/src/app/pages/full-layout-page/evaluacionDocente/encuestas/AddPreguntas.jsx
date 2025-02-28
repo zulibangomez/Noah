@@ -9,27 +9,36 @@ import { useLocation } from "react-router-dom";
 
 export const AddPreguntas = () => {
   const {listarEncuestaPre, evenEncuestaPre=[]}=useEncuestaPreguntas()
-   const [encuestaPre, setencuestaPre] = useState();
+   const [encuestaPre, setencuestaPre] = useState([]);
 
    const location = useLocation();
    const queryParams = new URLSearchParams(location.search);
    const id = queryParams.get("id");
-   console.log("ID obtenido de URL:", id);
+   console.log("ID obtenido de URL:....", id);
 
   useEffect(() => {
+    console.log("Consultando preguntas con ID:****", id);
     if (id) { // Verifica que el id exista antes de hacer la consulta
       listarEncuestaPre(id);
     }
   }, []);
-  console.log("Preguntas obtenidas:", evenEncuestaPre);
+
+
+  useEffect(() => {
+    console.log("Actualizando preguntas locales:", evenEncuestaPre);
+    setPreguntas(evenEncuestaPre);
+  }, [evenEncuestaPre]);
+
+  console.log("Preguntas obtenidas:----", evenEncuestaPre);
+  
   return (
     <div>
       <h2>Preguntas de la Encuesta</h2>
-      {evenEncuestaPre && evenEncuestaPre.length > 0 ? (
-        evenEncuestaPre.map((pregunta, index) => (
+      {encuestaPre && encuestaPre.length > 0 ? (
+        encuestaPre.map((pregunta, index) => (
           <Accordion key={index}>
             <AccordionSummary
-              expandIcon={<ExpandMoreIcon />}
+              expandIcon={<ExpandMoreIcon/>}
               aria-controls={`panel${index}-content`}
               id={`panel${index}-header`}
             >
