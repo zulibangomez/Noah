@@ -14,6 +14,8 @@ import { RespuestaWiew } from './app/pages/full-layout-page/evaluacionDocente/op
 import { MenuLayout } from './shared/layout/MenuLayout';
 import { Addcuestionario, EncuestaView } from './app/pages/full-layout-page/evaluacionDocente/encuestas';
 import { AddPreguntas } from './app/pages/full-layout-page/evaluacionDocente/encuestas/AddPreguntas';
+import { EvaluadorView } from './app/pages/full-layout-page/evaluacionDocente/estudiantesEvaluadores';
+
 export const RuahApp = () => {
 //const authStatus='not-authenticated';
 
@@ -47,6 +49,7 @@ const {checkAuthToken, startLogin, status}= useAuthStore();
             <Route path="/encuestas" element={<MenuLayout> <EncuestaView /> </MenuLayout>} />
             <Route path="/adicion" element={<MenuLayout> <Addcuestionario /> </MenuLayout>} />
             <Route path="/adicionPregunta" element={<MenuLayout> <AddPreguntas /> </MenuLayout>} />
+            <Route path="/vistaestudiante" element={<MenuLayout> <EvaluadorView /> </MenuLayout>} />
             <Route path="*" element={<Navigate to="/" />} /> 
             </>
           )
