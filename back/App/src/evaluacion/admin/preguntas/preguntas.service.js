@@ -63,7 +63,7 @@ async function listapregunta() {
         pg.titulo as pregunta,
         pg.subtitulo as descripcion,
         pg.valor,
-        
+        tp.nombre as TipoPregunta,
 				CASE 
         WHEN pg.estado=true  THEN
             'Activo'
@@ -71,6 +71,7 @@ async function listapregunta() {
             'Desactivado'
         END as estado
         from eva.preguntas pg
+        INNER JOIN eva.tipo_preguntas tp on pg.id_tipo_pregunta=tp.id 
 				where pg.estado=true
 				order by pg.id  desc`;
         const resultado = await pool.query(query);

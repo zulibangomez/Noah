@@ -2,13 +2,10 @@ const pool = require("../../../../../database/connexion");
 
 // listar preguntas-respuestas.
 async function listencuesta(llave) {
-  console.log(
-    "Ubicados en el listEncuestaservice, esto recibe el backend:",
-    llave
-  );
+console.log('Ubicados en el listEncuestaservice, esto recibe el backend:',llave);
   try {
     const query = `
-                SELECT json_build_object(
+    SELECT json_build_object(
     'id_encuesta', e.id,
     'nombre_encuesta', e.nombre,
     'descripcion_encuesta', e.descripcion,
@@ -30,7 +27,7 @@ async function listencuesta(llave) {
                             ep.orden_pregunta AS orden_preguntas,
                             pt.titulo AS titulo_pregunta,
                             pt.subtitulo AS subtitulo_pregunta,
-                            tp.nombre AS tipo_pregunta,  -- Se obtiene desde encuestas_preguntas
+                            tp.nombre AS tipo_pregunta,
                             (
                                 -- Agrupar todas las respuestas de una pregunta en un solo array
                                 SELECT json_agg(
@@ -47,7 +44,7 @@ async function listencuesta(llave) {
                             ) AS opciones_respuesta
                         FROM eva.preguntas pt
                         JOIN eva.encuestas_preguntas ep ON pt.id = ep.id_pregunta
-                        LEFT JOIN eva.tipo_preguntas tp ON ep.id_tipo_pregunta = tp.id  -- Cambio aquí
+                        LEFT JOIN eva.tipo_preguntas tp ON pt.id_tipo_pregunta = tp.id
                         WHERE ep.id_aspecto = asp.id
                         GROUP BY pt.id, ep.orden_pregunta, pt.titulo, pt.subtitulo, tp.nombre
                     ) AS pregunta_json
@@ -67,139 +64,83 @@ GROUP BY e.id, te.nombre;
 
     `;
     const result = await pool.query(query, [llave]);
-    console.log("respuesta de result.rows", result.rows);
+    console.log('respuesta de result.rows', result.rows);
     return result.rows;
   } catch (error) {
-    console.log("error", error);
-    console.log("Query ejecutado, resultados: ", result.rows);
+    console.log("error", error)
+    console.log('Query ejecutado, resultados: ', result.rows );
+    
   }
 }
 
 //insertar personas_evaluadas
 async function AddPersonasEvaluadas(evaluadas) {
   try {
-    console.log(
-      "Recibiendo respuestas para guardar en la tabla AddPersonas_Evaluadas:",
-      evaluadas
-    );
+      console.log("Recibiendo respuestas para guardar en la tabla AddPersonas_Evaluadas:", evaluadas);
 
-    const {
-      id_persona,
-      id_encuesta,
-      id_docente,
-      id_asignacion_academica,
-      id_personas_externas,
-    } = evaluadas;
+      const { id_persona, id_encuesta, id_docente, id_asignacion_academica, id_personas_externas } = evaluadas;
 
-    const result = await pool.query(
-      `
+      const result = await pool.query(`
           INSERT INTO eva.personas_evaluadas (id_persona, id_encuesta, id_docente, id_asignacion_academica, id_personas_externas) 
-          VALUES ($1, $2, $3, $4, $5) RETURNING *;`,
-      [
-        id_persona,
-        id_encuesta,
-        id_docente,
-        id_asignacion_academica,
-        id_personas_externas,
-      ]
-    );
+          VALUES ($1, $2, $3, $4, $5) RETURNING *;`, 
+          [id_persona, id_encuesta, id_docente, id_asignacion_academica, id_personas_externas]
+      );
 
-    console.log("Respuesta AddPersonasEvaluadas: ", result.rows);
-    return result.rows;
+      console.log('Respuesta AddPersonasEvaluadas: ', result.rows);
+      return result.rows;
   } catch (error) {
-    console.error("Error al insertar en AddPersonasEvaluadas:", error);
-    throw error;
+      console.error('Error al insertar en AddPersonasEvaluadas:', error);
+      throw error; 
   }
 }
 
 // insertar personas_evaluadoras
 async function AddPersonasEvaluadoras(evaluadoras) {
   try {
-    console.log(
-      "Recibiendo respuestas para guardar en la tabla AddPersonas_Evaluadoras:",
-      evaluadoras
-    );
+      console.log("Recibiendo respuestas para guardar en la tabla AddPersonas_Evaluadoras:", evaluadoras);
 
-    const { id_persona, id_estudiante, id_persona_externa } = evaluadoras;
+      const { id_persona, id_estudiante, id_persona_externa } = evaluadoras;
 
-    const result = await pool.query(
-      `
+      const result = await pool.query(`
           INSERT INTO eva.personas_evaluadoras (id_persona, id_estudiante, id_persona_externa) 
-          VALUES ($1, $2, $3) RETURNING * ;`,
-      [id_persona, id_estudiante, id_persona_externa]
-    );
+          VALUES ($1, $2, $3) RETURNING * ;`, 
+          [id_persona, id_estudiante, id_persona_externa]
+      );
 
-    console.log("Respuesta AddPersonasEvaluadoras: ", result.rows);
-    return result.rows;
+      console.log('Respuesta AddPersonasEvaluadoras: ', result.rows);
+      return result.rows;
   } catch (error) {
-    console.error("Error al insertar en AddPersonasEvaluadoras:", error);
-    throw error;
+      console.error('Error al insertar en AddPersonasEvaluadoras:', error);
+      throw error;
   }
 }
 
 // insert resultado
 async function AddResultados(resultados) {
   try {
-    console.log(
-      "Recibiendo respuestas para guardar en la tabla Resultados:",
-      resultados
-    );
+      console.log("Recibiendo respuestas para guardar en la tabla Resultados:", resultados);
 
-    const {
-      fecha_resultado,
-      id_encuesta_pregunta,
-      resultado_adicional,
-      promedio,
-      id_persona_evaluadora,
-      id_persona_evaluada,
-    } = resultados;
+      const { fecha_resultado, id_encuesta_pregunta, resultado_adicional, promedio, id_persona_evaluadora, id_persona_evaluada } = resultados;
 
-    const result = await pool.query(
-      `
+      const result = await pool.query(`
           INSERT INTO eva.resultados (fecha_resultado, id_encuesta_pregunta, resultado_adicional, promedio, id_persona_evaluadora, id_persona_evaluada) 
-          VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ;`,
-      [
-        fecha_resultado,
-        id_encuesta_pregunta,
-        resultado_adicional,
-        promedio,
-        id_persona_evaluadora,
-        id_persona_evaluada,
-      ]
-    );
+          VALUES ($1, $2, $3, $4, $5, $6) RETURNING * ;`, 
+          [fecha_resultado, id_encuesta_pregunta, resultado_adicional, promedio, id_persona_evaluadora, id_persona_evaluada]
+      );
 
-    console.log("Respuesta AddResultados: ", result.rows);
-    return result.rows;
+      console.log('Respuesta AddResultados: ', result.rows);
+      return result.rows;
   } catch (error) {
-    console.error("Error al insertar en AddResultados:", error);
-    throw error;
+      console.error('Error al insertar en AddResultados:', error);
+      throw error;
   }
 }
 
-// listar tipo_preguntas
-async function TipoPregunta(tipo) {
-  console.log(
-    "Ubicados en el listEncuestaservice, esto recibe el backend:",
-    tipo
-  );
-  try {
-    const query = `
-select tp.id, tp.nombre, tp.estado, tipo_dato
-from tipo_preguntas tp
-        `;
-    const result = await pool.query(query, [llave]);
-    console.log("respuesta de result.rows", result.rows);
-    return result.rows;
-  } catch (error) {
-    console.log("error", error);
-    console.log("Query ejecutado, resultados: ", result.rows);
-  }
-}
 
-module.exports = {
+
+module.exports= {
   listencuesta,
   AddPersonasEvaluadas,
   AddPersonasEvaluadoras,
-  AddResultados,
-  TipoPregunta,
-};
+  AddResultados
+}
