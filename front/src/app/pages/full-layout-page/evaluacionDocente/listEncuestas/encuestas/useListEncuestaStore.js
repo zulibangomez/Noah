@@ -38,6 +38,5 @@ export const useListEncuestaStore = () => {
         }
     };
     
-
-    return { encuesta, listarEncuesta, AddEncuesta };
+    return { encuesta, listarEncuesta, AddEncuesta};
 };
