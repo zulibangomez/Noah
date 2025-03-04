@@ -12,13 +12,11 @@ import {
   Card,
   CardContent,
   Divider,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
 
 import imagenDocente from "../../../../../../assets/img/recursos/usuarioSinFoto.jpg";
 import { useListEncuestaStore } from "../../listEncuestas/encuestas/useListEncuestaStore";
+import TipoPregunta from "../../listEncuestas/encuestas/TipoPregunta";
 
 const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   const { encuesta, listarEncuesta, AddEncuesta } = useListEncuestaStore();
@@ -33,12 +31,24 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
 
   if (!docente) return null;
 
-  const handleRespuestaChange = (preguntaId, valor) => {
-    setRespuestas((prevRespuestas) => ({
-      ...prevRespuestas,
-      [preguntaId]: valor,
-    }));
+  // const handleRespuestaChange = (preguntaId, valor) => {
+  //   setRespuestas((prevRespuestas) => ({
+  //     ...prevRespuestas,
+  //     [preguntaId]: valor,
+  //   }));
+  // };
+  const handleRespuestaChange = (preguntaId, opcionId, isChecked) => {
+    setRespuestas((prev) => {
+      const respuestasPrevias = prev[preguntaId] || [];
+      return {
+        ...prev,
+        [preguntaId]: isChecked
+          ? [...respuestasPrevias, opcionId]
+          : respuestasPrevias.filter((id) => id !== opcionId),
+      };
+    });
   };
+  
 
   const handleGuardarEvaluacion = async () => {
     try {
@@ -215,24 +225,11 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
                                 {pregunta.titulo_pregunta}
                               </Typography>
 
-                              <RadioGroup
-                                value={respuestas[pregunta.id_pregunta] || ""}
-                                onChange={(e) =>
-                                  handleRespuestaChange(
-                                    pregunta.id_pregunta,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                {pregunta.opciones_respuesta.map((opcion) => (
-                                  <FormControlLabel
-                                    key={opcion.id_respuesta}
-                                    value={opcion.id_respuesta}
-                                    control={<Radio />}
-                                    label={opcion.nombre_opcion_respuesta}
-                                  />
-                                ))}
-                              </RadioGroup>
+                              <TipoPregunta
+                                pregunta={pregunta}
+                                respuestas={respuestas}
+                                handleRespuestaChange={handleRespuestaChange}
+                              />
                             </Box>
                           ))}
                         </Box>
