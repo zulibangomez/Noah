@@ -12,13 +12,11 @@ import {
   Card,
   CardContent,
   Divider,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
 } from "@mui/material";
 
 import imagenDocente from "../../../../../../assets/img/recursos/usuarioSinFoto.jpg";
 import { useListEncuestaStore } from "../../listEncuestas/encuestas/useListEncuestaStore";
+import TipoPregunta from "../../listEncuestas/encuestas/TipoPregunta";
 
 const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   const { encuesta, listarEncuesta, AddEncuesta } = useListEncuestaStore();
@@ -33,12 +31,28 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
 
   if (!docente) return null;
 
-  const handleRespuestaChange = (preguntaId, valor) => {
-    setRespuestas((prevRespuestas) => ({
-      ...prevRespuestas,
-      [preguntaId]: valor,
-    }));
+ 
+  const handleRespuestaChange = (preguntaId, valor, isChecked = null) => {
+    setRespuestas((prevRespuestas) => {
+      // Si isChecked es null, significa que es una respuesta de tipo simple (radio, texto, número, etc.)
+      if (isChecked === null) {
+        return {
+          ...prevRespuestas,
+          [preguntaId]: valor,
+        };
+      }
+  
+      // Si isChecked no es null, es un checkbox de selección múltiple
+      const respuestasPrevias = prevRespuestas[preguntaId] || [];
+      return {
+        ...prevRespuestas,
+        [preguntaId]: isChecked
+          ? [...respuestasPrevias, valor] // Agregar opción seleccionada
+          : respuestasPrevias.filter((id) => id !== valor), // Remover opción deseleccionada
+      };
+    });
   };
+  
 
   const handleGuardarEvaluacion = async () => {
     try {
@@ -58,18 +72,14 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
             id_persona_externa: null // Ajustar si hay otro tipo de evaluador
         };
 
-        const resultados = Object.keys(respuestas).map((idPregunta) => ({
+        const resultados ={
           fecha_resultado: new Date().toISOString(),
-          id_encuesta_pregunta: idPregunta, // Por qué se llama 'id_pregunta' en otro lugar?
-          resultado_adicional: null, 
-          promedio: null, // Asegúrate de que este valor sea el que esperas
-          id_persona_evaluadora: evaluadoras.id_persona, // Tomar de los evaluadores
-          id_persona_evaluada: evaluadas.id_persona, // Tomar de evaluadas
-        }));
+        }
+       
 
         console.log("Evaluadas:", evaluadas);
         console.log("Evaluadoras:", evaluadoras);
-        console.log("Resultados:", resultados);
+        console.log("Resultados:", );
   
         // Llamar a la función para agregar la encuesta
         console.log("Llamando a AddResultados con:", JSON.stringify(resultados, null, 2));
@@ -215,24 +225,11 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
                                 {pregunta.titulo_pregunta}
                               </Typography>
 
-                              <RadioGroup
-                                value={respuestas[pregunta.id_pregunta] || ""}
-                                onChange={(e) =>
-                                  handleRespuestaChange(
-                                    pregunta.id_pregunta,
-                                    e.target.value
-                                  )
-                                }
-                              >
-                                {pregunta.opciones_respuesta.map((opcion) => (
-                                  <FormControlLabel
-                                    key={opcion.id_respuesta}
-                                    value={opcion.id_respuesta}
-                                    control={<Radio />}
-                                    label={opcion.nombre_opcion_respuesta}
-                                  />
-                                ))}
-                              </RadioGroup>
+                              <TipoPregunta
+                                pregunta={pregunta}
+                                respuestas={respuestas}
+                                handleRespuestaChange={handleRespuestaChange}
+                              />
                             </Box>
                           ))}
                         </Box>
