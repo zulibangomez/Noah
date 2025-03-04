@@ -1,6 +1,7 @@
 const response =require('express');
 const ListEncuesta = require('../listarEncuestas/listEncuesta.service');
 const {AddPersonasEvaluadas, AddPersonasEvaluadoras, AddResultados} = require('../listarEncuestas/listEncuesta.service');
+const TipoPregunta = require('../listarEncuestas/listEncuesta.service');
 
 // ---------------------- lista preguntas y respuestas ----------------------//
 const listencuesta=async(req, res=response)=>{
@@ -64,5 +65,4 @@ const addencuesta = async (req, res) => {
 module.exports={
     listencuesta,
     addencuesta,
-
 }

@@ -70,8 +70,9 @@ async function listapregunta() {
         ELSE
             'Desactivado'
         END as estado
-        from eva.preguntas pg
-        INNER JOIN eva.tipo_preguntas tp on pg.id_tipo_pregunta=tp.id 
+        from eva.encuestas_preguntas e 
+        INNER JOIN eva.preguntas pg on e.id_pregunta =pg.id
+				INNER JOIN eva.tipo_preguntas tp on e.id_tipo_pregunta = tp.id
 				where pg.estado=true
 				order by pg.id  desc`;
         const resultado = await pool.query(query);
