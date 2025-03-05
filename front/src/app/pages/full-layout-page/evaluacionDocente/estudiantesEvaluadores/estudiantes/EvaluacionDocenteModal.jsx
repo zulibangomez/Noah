@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+
 import {
   Dialog,
   DialogActions,
@@ -21,6 +23,8 @@ import TipoPregunta from "../../listEncuestas/encuestas/TipoPregunta";
 const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   const { encuesta, listarEncuesta, AddEncuesta } = useListEncuestaStore();
   const [respuestas, setRespuestas] = useState({});
+  const [idEncuestaPregunta, setIdEncuestaPregunta] = useState(null);
+  const [promedio, setIPromedio] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,7 +36,11 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   if (!docente) return null;
 
  
-  const handleRespuestaChange = (preguntaId, valor, isChecked = null) => {
+  const handleRespuestaChange = (preguntaId, valor, isChecked = null, id_encuesta_preguntaevet) => {
+
+    setIdEncuestaPregunta(id_encuesta_preguntaevet);
+    setIPromedio(valor);
+
     setRespuestas((prevRespuestas) => {
       // Si isChecked es null, significa que es una respuesta de tipo simple (radio, texto, número, etc.)
       if (isChecked === null) {
@@ -56,30 +64,26 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
 
   const handleGuardarEvaluacion = async () => {
     try {
-        // Preparar los datos a enviar
+    
         const evaluadas = {
             id_persona: docente.id_persona,
-            id_encuesta: encuesta[0]?.id_encuesta, // Asegurarse de obtener el ID de la encuesta
+            id_encuesta: encuesta[0]?.id_encuesta,
             id_docente: docente.id_docente,
             id_asignacion_academica: docente.id_asignacion_academica,
-            id_personas_externas: null, // Ajustar si hay personas externas
+            id_personas_externas: null, 
         };
 
-        // Aquí se define evaluadoras correctamente, sin referirse a sí misma
         const evaluadoras = {
-            id_persona: docente?.id_persona || null, // ID del evaluador (docente)
-            id_estudiante: estudiante?.id_estudiante || null, // ID del estudiante
-            id_persona_externa: null // Ajustar si hay otro tipo de evaluador
+            id_persona: docente?.id_persona || null, 
+            id_estudiante: estudiante?.id_estudiante || null, 
+            id_persona_externa: null 
         };
 
         const resultados ={
-          fecha_resultado: new Date().toISOString(),
+          idEncuestaPregunta:idEncuestaPregunta,
+          promedio:promedio
         }
        
-
-        console.log("Evaluadas:", evaluadas);
-        console.log("Evaluadoras:", evaluadoras);
-        console.log("Resultados:", );
   
         // Llamar a la función para agregar la encuesta
         console.log("Llamando a AddResultados con:", JSON.stringify(resultados, null, 2));
@@ -256,6 +260,23 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
       </DialogActions>
     </Dialog>
   );
+};
+
+EvaluacionDocenteModal.propTypes = {
+  estudiante: PropTypes.shape({
+    id_estudiante: PropTypes.number.isRequired,
+  }),
+  docente: PropTypes.shape({
+    id_persona: PropTypes.number.isRequired,
+    id_docente: PropTypes.number.isRequired,
+    id_asignacion_academica: PropTypes.number.isRequired,
+    nombres_completos_docent: PropTypes.string.isRequired,
+    identificacion_docente: PropTypes.string.isRequired,
+    semestre_asignatura: PropTypes.string.isRequired,
+    nombre: PropTypes.string.isRequired,
+    ruta_foto_docente: PropTypes.string,
+  }).isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 
 export default EvaluacionDocenteModal;

@@ -39,7 +39,7 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
             {pregunta.opciones_respuesta.map((opcion) => (
               <FormControlLabel
                 key={opcion.id_respuesta}
-                control={<Checkbox checked={respuestas[pregunta.id_pregunta]?.includes(opcion.id_respuesta) || false} onChange={(e) => handleRespuestaChange(pregunta.id_pregunta, opcion.id_respuesta, e.target.checked)} />}
+                control={<Checkbox checked={respuestas[pregunta.id_pregunta]?.includes(opcion.id_respuesta) || false} onChange={(e) => handleRespuestaChange(pregunta.id_pregunta, opcion.valor_opcion_respuesta, e.target.checked,opcion.id_encuesta_pregunta)} />}
                 label={opcion.nombre_opcion_respuesta}
               />
             ))}
@@ -71,7 +71,7 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
             {pregunta.opciones_respuesta.map((opcion) => (
               <FormControlLabel
                 key={opcion.id_respuesta}
-                control={<Checkbox checked={respuestas[pregunta.id_pregunta]?.includes(opcion.id_respuesta) || false} onChange={(e) => handleRespuestaChange(pregunta.id_pregunta, opcion.id_respuesta, e.target.checked)} />}
+                control={<Checkbox checked={respuestas[pregunta.id_pregunta]?.includes(opcion.id_respuesta) || false} onChange={(e) => handleRespuestaChange(pregunta.id_pregunta, opcion.valor_opcion_respuesta, e.target.checked,opcion.id_encuesta_pregunta)} />}
                 label={opcion.nombre_opcion_respuesta}
               />
             ))}

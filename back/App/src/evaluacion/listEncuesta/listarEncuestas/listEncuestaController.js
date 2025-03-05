@@ -24,30 +24,33 @@ const listencuesta=async(req, res=response)=>{
 const addencuesta = async (req, res) => {
     try {
         console.log("Ubicados en el listEncuestaController - addEncuesta: req", req.body);
-
+            console.log("req.body",req.body);
+            
         const { evaluadas, evaluadoras, resultados } = req.body;
-        let response = {};
+        let IdPersona_evaluada='';
+        let IdPersona_evaludadora='';
+        let resultResultados=''
+
 
         if (evaluadas && Object.keys(evaluadas).length > 0) {
-            const resultEvaluadas = await AddPersonasEvaluadas(evaluadas);
-            response.personas_evaluadas = resultEvaluadas;
+             IdPersona_evaluada = await AddPersonasEvaluadas(evaluadas);              
         }
 
         if (evaluadoras && Object.keys(evaluadoras).length > 0) {
-            const resultEvaluadoras = await AddPersonasEvaluadoras(evaluadoras);
-            response.personas_evaluadoras = resultEvaluadoras;
+                IdPersona_evaludadora = await AddPersonasEvaluadoras(evaluadoras);
         }
 
         if (resultados && Object.keys(resultados).length > 0) {
-            const resultResultados = await AddResultados(resultados);
-            response.resultados = resultResultados;
+            resultResultados = await AddResultados(resultados,IdPersona_evaludadora,IdPersona_evaluada);
+
         }
 
-        console.log("Datos insertados en la BD:", response);
+
+        console.log("Datos insertados en la BD:", resultResultados);
 
         return res.status(200).json({
             msg: 'Datos guardados correctamente',
-            data: response
+            data: resultResultados
         });
 
     } catch (error) {
