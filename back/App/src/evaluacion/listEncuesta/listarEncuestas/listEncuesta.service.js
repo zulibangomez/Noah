@@ -144,7 +144,7 @@ async function AddResultados(resultados,IdPersona_evaludadora,IdPersona_evaluada
       [
        'now()',
         resultados.idEncuestaPregunta,
-        null,
+        resultados.resultadoAdd,
         resultados.promedio,
         IdPersona_evaludadora,
         IdPersona_evaluada
