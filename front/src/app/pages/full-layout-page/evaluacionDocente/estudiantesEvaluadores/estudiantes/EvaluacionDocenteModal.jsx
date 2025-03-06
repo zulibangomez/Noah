@@ -25,6 +25,7 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   const [respuestas, setRespuestas] = useState({});
   const [idEncuestaPregunta, setIdEncuestaPregunta] = useState(null);
   const [promedio, setIPromedio] = useState(null);
+  const [resultadoAdd, setResultadoAdd] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,30 +37,32 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
   if (!docente) return null;
 
  
-  const handleRespuestaChange = (preguntaId, valor, isChecked = null, id_encuesta_preguntaevet) => {
-
+  const handleRespuestaChange = (preguntaId, valor, isChecked = null, id_encuesta_preguntaevet, resultado_adicional) => {
     setIdEncuestaPregunta(id_encuesta_preguntaevet);
     setIPromedio(valor);
+    setResultadoAdd(resultado_adicional);
 
     setRespuestas((prevRespuestas) => {
-      // Si isChecked es null, significa que es una respuesta de tipo simple (radio, texto, número, etc.)
       if (isChecked === null) {
         return {
           ...prevRespuestas,
-          [preguntaId]: valor,
+          [preguntaId]: {
+            valor: valor,  // Guarda la opción seleccionada
+            resultado_adicional: resultado_adicional, // Guarda lo que escribe el usuario
+          },
         };
       }
   
-      // Si isChecked no es null, es un checkbox de selección múltiple
       const respuestasPrevias = prevRespuestas[preguntaId] || [];
       return {
         ...prevRespuestas,
         [preguntaId]: isChecked
-          ? [...respuestasPrevias, valor] // Agregar opción seleccionada
-          : respuestasPrevias.filter((id) => id !== valor), // Remover opción deseleccionada
+          ? [...respuestasPrevias, valor] 
+          : respuestasPrevias.filter((id) => id !== valor),
       };
     });
-  };
+};
+
   
 
   const handleGuardarEvaluacion = async () => {
@@ -81,7 +84,8 @@ const EvaluacionDocenteModal = ({ estudiante, docente, onClose }) => {
 
         const resultados ={
           idEncuestaPregunta:idEncuestaPregunta,
-          promedio:promedio
+          promedio:promedio,
+          resultadoAdd:resultadoAdd
         }
        
   
