@@ -15,6 +15,11 @@ import {
   Box,
   Typography,
   Button,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
 } from "@mui/material";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -67,8 +72,8 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
             />
           ))}
         </FormControl>
-          
         );
+        
         case "ESCALA DE VALORACIÓN": //lista valor_opcion_respuesta y id_encuesta_pregunta
           case "PUNTUACIÓN CON ESTRELLAS":
             return (
@@ -187,14 +192,37 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
             ))}
           </FormControl>
         );
-      case "LISTA DESPLEGABLE":
-        return (
-          <Select fullWidth value={respuestas[pregunta.id_pregunta] || ""} onChange={(e) => handleRespuestaChange(pregunta.id_pregunta, e.target.value)}>
-            {pregunta.opciones_respuesta.map((opcion) => (
-              <MenuItem key={opcion.id_respuesta} value={opcion.id_respuesta}>{opcion.nombre_opcion_respuesta}</MenuItem>
-            ))}
-          </Select>
-        );
+        case "LISTA DESPLEGABLE": //lista valor_opcion_respuesta y id_encuesta_pregunta
+          return (
+            <FormControl fullWidth>
+              <FormLabel>Seleccione una opción</FormLabel>
+              <Select
+                value={respuestas[pregunta.id_pregunta]?.valor || ""}
+                onChange={(e) => {
+                  const selectedOption = pregunta.opciones_respuesta.find(
+                    (opcion) => opcion.valor_opcion_respuesta === e.target.value
+                  );
+        
+                  if (!selectedOption) return; // Evita errores si no encuentra la opción
+        
+                  handleRespuestaChange(
+                    pregunta.id_pregunta,
+                    selectedOption.valor_opcion_respuesta,
+                    null, // No se necesita isChecked en un select
+                    selectedOption.id_encuesta_pregunta,
+                    null // Puedes pasar resultado adicional si lo usas
+                  );
+                }}
+              >
+                {pregunta.opciones_respuesta.map((opcion) => (
+                  <MenuItem key={opcion.id_respuesta} value={opcion.valor_opcion_respuesta}>
+                    {opcion.nombre_opcion_respuesta}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          );
+        
       case "FECHA": //lista valor_opcion_respuesta y id_encuesta_pregunta
         return <Input 
         type="date" 
@@ -268,6 +296,7 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
                         selectedOption.valor_opcion_respuesta,
                         null, 
                         selectedOption.id_encuesta_pregunta,
+                        newValue,
                         `${newValue}%`,
                       );
                     }
@@ -276,7 +305,7 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
                   max={100}
                   step={1}
                 />
-                <span>{respuestas[pregunta.id_pregunta]?.resultado_adicional || 0}</span>
+                <span>{respuestas[pregunta.id_pregunta]?.resultado_adicional || 0}%</span>
               </div>
             );
           
@@ -288,14 +317,48 @@ const TipoPregunta = ({ pregunta, respuestas, handleRespuestaChange }) => {
           </Button>
         );
 
-      case "MATRIZ DE ESCALA":
-        return (
-          <Box>
-            {pregunta.opciones_respuesta.map((opcion, index) => (
-              <TextField key={index} label={opcion.nombre_opcion_respuesta} fullWidth variant="outlined" margin="dense" />
-            ))}
-          </Box>
-        );
+        case "MATRIZ DE ESCALA":
+  return (
+    <Box>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Items</TableCell>
+            <TableCell>Muy Mala</TableCell>
+            <TableCell>Mala</TableCell>
+            <TableCell>Regular</TableCell>
+            <TableCell>Buena</TableCell>
+            <TableCell>Excelente</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {pregunta.opciones_respuesta.map((opcion) => (
+            <TableRow key={opcion.id_respuesta}>
+              <TableCell>{opcion.nombre_opcion_respuesta}</TableCell>
+              {[100, 200, 300, 400, 500].map((valor) => (
+                <TableCell key={valor} align="center">
+                  <Radio
+                    checked={respuestas[pregunta.id_pregunta]?.[opcion.id_respuesta] === valor}
+                    onChange={() =>
+                      handleRespuestaChange(
+                        pregunta.id_pregunta,
+                        valor, // Valor seleccionado
+                        true,  // Simula "checked"
+                        opcion.id_encuesta_pregunta // ID de la pregunta
+                      )
+                    }
+                  />
+                </TableCell>
+              ))}
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+
+    </Box>
+  );
+
+        
       default:
         return <Typography variant="body2">Tipo de pregunta no soportado</Typography>;
     }
